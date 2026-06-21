@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS Library Studio</title>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
+    <link rel="preconnect" href="https://unpkg.com" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/css/tabulator_simple.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/dist/tippy.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.8.1/dist/nouislider.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">HTML CSS JS</p>
+        <h1>JS Library Studio</h1>
+      </div>
+      <nav class="quick-nav" aria-label="라이브러리 카테고리">
+        <a href="#visual">시각화</a>
+        <a href="#motion">모션</a>
+        <a href="#content">콘텐츠</a>
+        <a href="#utility">유틸리티</a>
+      </nav>
+      <button class="icon-button" id="themeToggle" aria-label="테마 전환" data-tippy-content="테마 전환">
+        <i data-lucide="sun-medium"></i>
+      </button>
+    </header>
+
+    <main>
+      <section class="workspace">
+        <aside class="panel">
+          <div class="status-card">
+            <span class="status-dot"></span>
+            <div>
+              <strong>30개 기능</strong>
+              <span>브라우저에서 즉시 실행</span>
+            </div>
+          </div>
+          <div class="mini-metrics">
+            <div><strong id="loadedCount">0</strong><span>loaded</span></div>
+            <div><strong id="featureCount">30</strong><span>features</span></div>
+          </div>
+          <label class="search-box">
+            <i data-lucide="search"></i>
+            <input id="librarySearch" type="search" placeholder="라이브러리 검색" />
+          </label>
+          <div id="libraryPills" class="pills"></div>
+        </aside>
+
+        <section class="hero-preview" aria-label="주요 미리보기">
+          <div class="hero-copy">
+            <p class="eyebrow">Interactive collection</p>
+            <h2>차트, 지도, 3D, 문서 도구까지 한 화면에서 만지는 JS 데모</h2>
+            <div class="hero-actions">
+              <button class="primary-action" id="shuffleAll"><i data-lucide="sparkles"></i><span>Shuffle</span></button>
+              <button class="secondary-action" id="exportSnapshot"><i data-lucide="download"></i><span>PDF</span></button>
+            </div>
+          </div>
+          <div class="preview-media">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80" alt="데이터 대시보드 화면" />
+          </div>
+        </section>
+      </section>
+
+      <section id="visual" class="library-section">
+        <div class="section-heading">
+          <p class="eyebrow">Data & Visual</p>
+          <h2>시각화</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card" data-library="Chart.js">
+            <div class="card-head"><h3>Chart.js</h3><button class="icon-button refresh-chart" aria-label="차트 갱신"><i data-lucide="refresh-cw"></i></button></div>
+            <div class="chart-box fixed-chart"><canvas id="chartJsCanvas"></canvas></div>
+          </article>
+
+          <article class="feature-card" data-library="D3.js">
+            <div class="card-head"><h3>D3.js</h3><button class="icon-button" id="d3Pulse" aria-label="막대 갱신"><i data-lucide="activity"></i></button></div>
+            <svg id="d3Bars" role="img" aria-label="D3 막대 차트"></svg>
+          </article>
+
+          <article class="feature-card" data-library="ECharts">
+            <div class="card-head"><h3>ECharts</h3><span class="badge">radar</span></div>
+            <div id="echartsRadar" class="chart-box"></div>
+          </article>
+
+          <article class="feature-card" data-library="Plotly.js">
+            <div class="card-head"><h3>Plotly.js</h3><span class="badge">scatter</span></div>
+            <div id="plotlyScatter" class="chart-box"></div>
+          </article>
+
+          <article class="feature-card wide" data-library="Leaflet">
+            <div class="card-head"><h3>Leaflet</h3><span class="badge">map</span></div>
+            <div id="leafletMap"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="motion" class="library-section">
+        <div class="section-heading">
+          <p class="eyebrow">Motion & Media</p>
+          <h2>모션</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card" data-library="Three.js">
+            <div class="card-head"><h3>Three.js</h3><span class="badge">3D</span></div>
+            <div id="threeStage" class="stage"></div>
+          </article>
+
+          <article class="feature-card" data-library="Matter.js">
+            <div class="card-head"><h3>Matter.js</h3><button class="icon-button" id="matterDrop" aria-label="물체 추가"><i data-lucide="plus"></i></button></div>
+            <div id="matterStage" class="stage"></div>
+          </article>
+
+          <article class="feature-card" data-library="Anime.js">
+            <div class="card-head"><h3>Anime.js</h3><button class="icon-button" id="animeRun" aria-label="애니메이션 실행"><i data-lucide="play"></i></button></div>
+            <div class="orbit" id="animeOrbit"><span></span><span></span><span></span><span></span></div>
+          </article>
+
+          <article class="feature-card" data-library="GSAP">
+            <div class="card-head"><h3>GSAP</h3><button class="icon-button" id="gsapRun" aria-label="타임라인 실행"><i data-lucide="zap"></i></button></div>
+            <div class="gsap-track"><span></span><span></span><span></span></div>
+          </article>
+
+          <article class="feature-card" data-library="Swiper">
+            <div class="card-head"><h3>Swiper</h3><span class="badge">gallery</span></div>
+            <div class="swiper" id="imageSwiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="https://picsum.photos/id/1048/600/360" alt="산과 호수" /></div>
+                <div class="swiper-slide"><img src="https://picsum.photos/id/1015/600/360" alt="강과 협곡" /></div>
+                <div class="swiper-slide"><img src="https://picsum.photos/id/1067/600/360" alt="작업 공간" /></div>
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </article>
+
+          <article class="feature-card" data-library="SortableJS">
+            <div class="card-head"><h3>SortableJS</h3><span class="badge">board</span></div>
+            <div class="kanban" id="sortableBoard">
+              <div>Design</div>
+              <div>Build</div>
+              <div>Review</div>
+              <div>Ship</div>
+            </div>
+          </article>
+
+          <article class="feature-card" data-library="Typed.js">
+            <div class="card-head"><h3>Typed.js</h3><span class="badge">text</span></div>
+            <div class="terminal-line"><span id="typedLine"></span></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="content" class="library-section">
+        <div class="section-heading">
+          <p class="eyebrow">Content & Productivity</p>
+          <h2>콘텐츠</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card" data-library="Fuse.js">
+            <div class="card-head"><h3>Fuse.js</h3><span class="badge">search</span></div>
+            <input class="field" id="fuseInput" value="chart" />
+            <ul class="result-list" id="fuseResults"></ul>
+          </article>
+
+          <article class="feature-card" data-library="Lodash">
+            <div class="card-head"><h3>Lodash</h3><button class="icon-button" id="lodashRoll" aria-label="통계 갱신"><i data-lucide="dice-5"></i></button></div>
+            <div class="stat-cloud" id="lodashStats"></div>
+          </article>
+
+          <article class="feature-card" data-library="Day.js">
+            <div class="card-head"><h3>Day.js</h3><span class="badge">time</span></div>
+            <div class="time-list" id="dayTimeline"></div>
+          </article>
+
+          <article class="feature-card" data-library="Luxon">
+            <div class="card-head"><h3>Luxon</h3><span class="badge">zone</span></div>
+            <div class="time-list" id="luxonZones"></div>
+          </article>
+
+          <article class="feature-card" data-library="PapaParse">
+            <div class="card-head"><h3>PapaParse</h3><button class="icon-button" id="parseCsv" aria-label="CSV 파싱"><i data-lucide="table-2"></i></button></div>
+            <table class="mini-table" id="csvTable"></table>
+          </article>
+
+          <article class="feature-card wide" data-library="Tabulator">
+            <div class="card-head"><h3>Tabulator</h3><span class="badge">grid</span></div>
+            <div id="tabulatorTable"></div>
+          </article>
+
+          <article class="feature-card" data-library="Marked + DOMPurify">
+            <div class="card-head"><h3>Marked + DOMPurify</h3><span class="badge">md</span></div>
+            <textarea class="field markdown-input" id="markdownInput">## Demo
+**Markdown** rendered safely.
+
+- fast
+- clean
+- reusable</textarea>
+            <div class="markdown-preview" id="markdownPreview"></div>
+          </article>
+
+          <article class="feature-card" data-library="Prism.js">
+            <div class="card-head"><h3>Prism.js</h3><span class="badge">code</span></div>
+            <pre class="code-box"><code class="language-js">const score = [8, 13, 21];
+const total = score.reduce((a, b) =&gt; a + b, 0);</code></pre>
+          </article>
+
+          <article class="feature-card wide" data-library="Mermaid">
+            <div class="card-head"><h3>Mermaid</h3><span class="badge">flow</span></div>
+            <pre class="mermaid">
+flowchart LR
+  A["Idea"] --> B["Library"]
+  B --> C["Demo"]
+  C --> D["Studio"]
+            </pre>
+          </article>
+        </div>
+      </section>
+
+      <section id="utility" class="library-section">
+        <div class="section-heading">
+          <p class="eyebrow">Utility</p>
+          <h2>유틸리티</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card" data-library="QRCode.js">
+            <div class="card-head"><h3>QRCode.js</h3><button class="icon-button" id="makeQr" aria-label="QR 생성"><i data-lucide="qr-code"></i></button></div>
+            <input class="field" id="qrText" value="https://developer.mozilla.org" />
+            <div id="qrBox" class="qr-box"></div>
+          </article>
+
+          <article class="feature-card" data-library="jsPDF">
+            <div class="card-head"><h3>jsPDF</h3><button class="icon-button" id="makePdf" aria-label="PDF 생성"><i data-lucide="file-down"></i></button></div>
+            <div class="paper-preview">
+              <strong>Library Report</strong>
+              <span>30 demos ready</span>
+              <span>Generated in browser</span>
+            </div>
+          </article>
+
+          <article class="feature-card" data-library="Toastify">
+            <div class="card-head"><h3>Toastify</h3><button class="icon-button" id="showToast" aria-label="알림 표시"><i data-lucide="bell"></i></button></div>
+            <div class="notification-stack"><span></span><span></span><span></span></div>
+          </article>
+
+          <article class="feature-card" data-library="Tippy.js">
+            <div class="card-head"><h3>Tippy.js</h3><span class="badge">tips</span></div>
+            <div class="tip-row">
+              <button class="chip" data-tippy-content="빠른 도움말">Alpha</button>
+              <button class="chip" data-tippy-content="상태 툴팁">Beta</button>
+              <button class="chip" data-tippy-content="작업 힌트">Gamma</button>
+            </div>
+          </article>
+
+          <article class="feature-card" data-library="Flatpickr">
+            <div class="card-head"><h3>Flatpickr</h3><span class="badge">date</span></div>
+            <input class="field" id="datePicker" />
+          </article>
+
+          <article class="feature-card wide" data-library="FullCalendar">
+            <div class="card-head"><h3>FullCalendar</h3><span class="badge">calendar</span></div>
+            <div id="calendarBox"></div>
+          </article>
+
+          <article class="feature-card" data-library="noUiSlider">
+            <div class="card-head"><h3>noUiSlider</h3><span class="badge" id="sliderValue">40 - 75</span></div>
+            <div id="rangeSlider"></div>
+          </article>
+
+          <article class="feature-card" data-library="Choices.js">
+            <div class="card-head"><h3>Choices.js</h3><span class="badge">tags</span></div>
+            <select id="choicesSelect" multiple>
+              <option selected>Chart</option>
+              <option selected>Map</option>
+              <option>Motion</option>
+              <option>Docs</option>
+              <option>Search</option>
+            </select>
+          </article>
+
+          <article class="feature-card" data-library="SweetAlert2">
+            <div class="card-head"><h3>SweetAlert2</h3><button class="icon-button" id="showModal" aria-label="모달 표시"><i data-lucide="message-square"></i></button></div>
+            <div class="modal-preview"><span></span><span></span><span></span></div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.3/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.5.0/build/global/luxon.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tabulator-tables@6.3.1/dist/js/tabulator.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.3/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nouislider@15.8.1/dist/nouislider.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
